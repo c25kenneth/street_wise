@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "631390939787",
+    "project_id": "street-wise-70430",
+    "storage_bucket": "street-wise-70430.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631390939787:android:95bfd7d65008f3af53828e",
+        "android_client_info": {
+          "package_name": "com.kennydev.street_wise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631390939787-obel2p4k95roj3s1uv6b5a7rv61r8lal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4dU098MypE95Bl9VcBeZ9p3qWDZRJac4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631390939787-obel2p4k95roj3s1uv6b5a7rv61r8lal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
