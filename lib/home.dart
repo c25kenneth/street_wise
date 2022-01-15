@@ -28,13 +28,12 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      persistentFooterButtons: [
-        FlatButton(
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateTracker()));
-          }
-        , child: Text('📌', style: TextStyle(fontSize: 35.0),))
-      ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateTracker()));
+        },
+        child: Text('📍', style: TextStyle(fontSize: 35)),
+      ),
     );
   }
 }
