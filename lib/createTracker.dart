@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:street_wise/firestore.dart';
 
 class CreateTracker extends StatefulWidget {
   const CreateTracker({ Key key }) : super(key: key);
@@ -16,6 +17,10 @@ class _CreateTrackerState extends State<CreateTracker> {
   String trackeeAddress = ''; 
   String latitude = ''; 
   String longitude = '';
+  String hours = '';
+  String minutes = '';
+  String seconds = ''; 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +63,58 @@ class _CreateTrackerState extends State<CreateTracker> {
                 },
                 
               ),
+            ),
+            Padding(
+              child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Number of Hours for Timer',
+                  hintText: '1'
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    hours = val; 
+                  });
+                },
+                validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
+              ),
+              padding: EdgeInsets.all(15),
+            ),
+            Padding(
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Number of Minutes for Timer',
+                  hintText: '5'
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    minutes = val; 
+                  });
+                },
+                validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
+              ),
+              padding: EdgeInsets.all(15),         
+            ),
+            Padding(
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Number of Seconds for Timer',
+                  hintText: '10'
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    seconds = val; 
+                  });
+                },
+                validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
+              ),
+              padding: EdgeInsets.all(15),
+              
             ),
             Padding(
               child: TextFormField(
@@ -110,6 +167,7 @@ class _CreateTrackerState extends State<CreateTracker> {
             ),
             Padding(
               child: TextFormField(
+                keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Latitude of meeting place',
@@ -126,6 +184,7 @@ class _CreateTrackerState extends State<CreateTracker> {
             ),
             Padding(
               child: TextFormField(
+                keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Longitude of meeting place',
@@ -149,10 +208,11 @@ class _CreateTrackerState extends State<CreateTracker> {
                   color: Colors.red, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
                 onPressed: () async {
-                  print('$trackerName + $trackeeName + $name + $trackeePhoneNumber + $trackeeAddress + $latitude + $longitude');
+                  await addTracker(trackerName, name, trackeeName, trackeePhoneNumber, trackeeAddress, latitude, longitude, hours, minutes, seconds);
+                  Navigator.pop(context);
                 },
                 child: Text(
-                  'Create account!',
+                  'Create tracker!',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

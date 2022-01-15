@@ -28,7 +28,7 @@ class _SignInState extends State<SignIn> {
             onPressed: (){
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Register()));
             }, 
-            child: Text('Sign In')
+            child: Text('Register')
           ),
         ],
       ),
