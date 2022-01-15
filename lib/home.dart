@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:street_wise/createTracker.dart';
 import 'package:street_wise/firebaseauth.dart';
 import 'package:street_wise/signIn.dart';
 class Home extends StatefulWidget {
@@ -17,9 +18,23 @@ class _HomeState extends State<Home> {
           FlatButton(onPressed: () async {
             await signOut(); 
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
-          }, child: Text('Sign Out!'))
+          }, child: Text('Sign Out!')),
         ],
       ),
+      body: Center(
+        child: Column(
+          children: [
+            
+          ],
+        ),
+      ),
+      persistentFooterButtons: [
+        FlatButton(
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateTracker()));
+          }
+        , child: Text('📌', style: TextStyle(fontSize: 35.0),))
+      ],
     );
   }
 }
