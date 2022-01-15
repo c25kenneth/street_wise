@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:street_wise/firebaseauth.dart';
+import 'package:street_wise/signIn.dart';
 class Home extends StatefulWidget {
   const Home({ Key key }) : super(key: key);
 
@@ -10,7 +12,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Page'),),
+      appBar: AppBar(title: Text('Home Page'),
+        actions: [
+          FlatButton(onPressed: () async {
+            await signOut(); 
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+          }, child: Text('Sign Out!'))
+        ],
+      ),
     );
   }
 }
