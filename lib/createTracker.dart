@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:street_wise/firestore.dart';
+import 'package:in_app_notification/in_app_notification.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 class CreateTracker extends StatefulWidget {
   const CreateTracker({ Key key }) : super(key: key);
@@ -9,7 +12,7 @@ class CreateTracker extends StatefulWidget {
 }
 
 class _CreateTrackerState extends State<CreateTracker> {
-
+  TwilioFlutter twilioFlutter; 
   String trackerName = ''; 
   String name = '';
   String trackeeName = '';
@@ -20,7 +23,23 @@ class _CreateTrackerState extends State<CreateTracker> {
   String hours = '';
   String minutes = '';
   String seconds = ''; 
+  int _hours = 0;
+  int _minutes = 0;
+  int _seconds = 0;
 
+  @override
+  void initState() {
+    twilioFlutter = TwilioFlutter(
+      accountSid: 'AC07c124dab9ac7246efaf5c8dc8ae429c',
+      authToken: 'c1c233a6ce7646a3075104aa44399e3f', 
+      twilioNumber: '+19362463603'
+    );
+    super.initState();
+  }
+
+  void sendSms(String phoneNumber, String name) async {
+    await twilioFlutter.sendSMS(toNumber: phoneNumber, messageBody: '$name is looking for you! Make sure you reach out soon!');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +94,7 @@ class _CreateTrackerState extends State<CreateTracker> {
                 onChanged: (val) {
                   setState(() {
                     hours = val; 
+                    _hours = int.parse(val);
                   });
                 },
                 validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
@@ -92,6 +112,7 @@ class _CreateTrackerState extends State<CreateTracker> {
                 onChanged: (val) {
                   setState(() {
                     minutes = val; 
+                    _minutes = int.parse(val); 
                   });
                 },
                 validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
@@ -109,6 +130,7 @@ class _CreateTrackerState extends State<CreateTracker> {
                 onChanged: (val) {
                   setState(() {
                     seconds = val; 
+                    _seconds = int.parse(val);
                   });
                 },
                 validator: (val) => val.isEmpty == true ? "Please enter the trackee's name!" : null,
@@ -208,14 +230,31 @@ class _CreateTrackerState extends State<CreateTracker> {
                   color: Colors.red, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
                 onPressed: () async {
-                  await addTracker(trackerName, name, trackeeName, trackeePhoneNumber, trackeeAddress, latitude, longitude, hours, minutes, seconds);
-                  Navigator.pop(context);
+                  var result = await addTracker(trackerName, name, trackeeName, trackeePhoneNumber, trackeeAddress, latitude, longitude, hours, minutes, seconds);
+                  if (result == true) {
+                    Timer(Duration(hours: _hours, minutes: _minutes, seconds: _seconds), (){
+                      sendSms(trackeePhoneNumber, name);
+                      InAppNotification.of(context).show(
+                        child: Card(
+                          child: Column(
+                            children: [
+                              Text('It has been a while since $trackeeName has reached out. We recommend checking up on them.', style: TextStyle(fontSize: 24),),
+                            ],
+                          ),
+                        ),
+                        onTap: () => print('Notification tapped!'),
+                        duration: Duration(seconds: 10),
+);
+                      Navigator.pop(context); 
+                    });
+                  }
                 },
                 child: Text(
                   'Create tracker!',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
+              
             ),
           ],
         ),
@@ -223,3 +262,4 @@ class _CreateTrackerState extends State<CreateTracker> {
     );
   }
 }
+

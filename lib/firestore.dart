@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future <void> addTracker (String trackerName, String name, String trackeeName, String trackeePhoneNumber, String trackeeDestination, String latitude, String longitude, String hours, String minutes, String seconds) async {
+Future <bool> addTracker (String trackerName, String name, String trackeeName, String trackeePhoneNumber, String trackeeDestination, String latitude, String longitude, String hours, String minutes, String seconds) async {
   try {
     FirebaseUser user = await FirebaseAuth.instance.currentUser(); 
     String userID = user.uid; 
@@ -17,9 +17,11 @@ Future <void> addTracker (String trackerName, String name, String trackeeName, S
       'hours' : hours, 
       'minutes' : minutes, 
       'seconds' : seconds,
-      'uid' : userID,  
+      'uid' : userID,
     });
+    return true; 
   } catch (e) {
     print(e.toString()); 
+    return false; 
   }
 }
