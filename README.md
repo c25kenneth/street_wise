@@ -1,6 +1,6 @@
 # street_wise
 
-A Flutter Application designed to make the streets much safer!
+A Flutter Application designed to make going from place to place much safer!
 
 ## Built With:
 
