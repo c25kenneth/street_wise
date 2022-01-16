@@ -1,16 +1,16 @@
 # street_wise
 
-A new Flutter project.
+A Flutter Application designed to make the streets much safer!
 
-## Getting Started
+## Built With:
 
-This project is a starting point for a Flutter application.
+Flutter for the frontend. 
+Firebase Auth for Authentication
+Firestore for NoSQL Database
+Twilio for SMS communication
+Google Maps API for google maps widget in Flutter. 
+in_app_notifications package for Flutter in app notifications. 
 
-A few resources to get you started if this is your first Flutter project:
+## What it Does: 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Makes going from place to place much more simple and easy!
