@@ -31,6 +31,8 @@ dependencies:
   firebase_auth: 0.14.0+5
   cloud_firestore: 0.12.9+4
   android_alarm_manager: 0.4.5+20
+  google_maps_flutter: 0.5.13
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

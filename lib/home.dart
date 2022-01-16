@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:street_wise/createTracker.dart';
 import 'package:street_wise/firebaseauth.dart';
 import 'package:street_wise/locationsMap.dart';
@@ -14,6 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Completer<GoogleMapController> _mapController = Completer(); 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +32,13 @@ class _HomeState extends State<Home> {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (context, snapshot){
-          if (snapshot.hasError || !snapshot.hasData) {
+          if (!snapshot.hasData) {
             return CircularProgressIndicator();
           } else {
             return StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance.collection('trackers').where('uid', isEqualTo: snapshot.data.uid).snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.hasError || !snapshot.hasData) {
+                if (!snapshot.hasData || snapshot.data.documents == null) {
                   return CircularProgressIndicator(); 
                 } 
                 else {
@@ -104,23 +108,27 @@ class _HomeState extends State<Home> {
         StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged, 
           builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.hasError) {
+            if (!snapshot.hasData) {
               return CircularProgressIndicator();
             } else {
               return StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance.collection('trackers').where('uid', isEqualTo: snapshot.data.uid).snapshots(),
-                builder: (context, snapshot){             
-                  final document = snapshot.data.documents;
-                  return Container(
-                    width: 900,
-                    child: FlatButton.icon(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LocationsMap(documents: document,)));
-                      },
-                      label: Text('View Locations on Map!'),
-                      icon: Icon(Icons.map), 
-                    ),
-                  );       
+                builder: (context, snapshot) {   
+                  if (!snapshot.hasData || snapshot.data.documents == null) {          
+                    return CircularProgressIndicator();
+                  } else {
+                    final document = snapshot.data.documents;
+                    return Container(
+                      width: 900,
+                      child: FlatButton.icon(
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LocationsMap(documents: document, mapController: _mapController, initialPosition: const LatLng(47.61657864660121, -122.20093137521792),)));
+                        },
+                        label: Text('View Locations on Map!'),
+                        icon: Icon(Icons.map), 
+                      ),
+                    );  
+                  }    
                 },
               );
             }
