@@ -24,7 +24,19 @@ class _LocationsMapState extends State<LocationsMap> {
         title: Text('Map Screen!')
       ),
       body: GoogleMap(
-        initialCameraPosition: CameraPosition(target: widget.initialPosition, zoom: 12), 
+        initialCameraPosition: CameraPosition(target: widget.initialPosition, zoom: 12),  
+        markers: widget.documents.map((doc) => Marker(
+          markerId: MarkerId(doc.documentID),
+          icon: BitmapDescriptor.defaultMarkerWithHue(350.0), 
+          position: LatLng(
+            double.parse(doc.data['latitude']),
+            double.parse(doc.data['longitude']),
+          ),
+          infoWindow: InfoWindow(
+            snippet: doc.data['destination'],
+            title: doc.data['tracker_name']
+          ),
+        )).toSet(),
         onMapCreated: (mapController) {
           widget.mapController.complete(mapController); 
         },

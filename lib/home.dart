@@ -117,12 +117,12 @@ class _HomeState extends State<Home> {
                   if (!snapshot.hasData || snapshot.data.documents == null) {          
                     return CircularProgressIndicator();
                   } else {
-                    final document = snapshot.data.documents;
+                    final documents = snapshot.data.documents;
                     return Container(
                       width: 900,
                       child: FlatButton.icon(
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LocationsMap(documents: document, mapController: _mapController, initialPosition: const LatLng(47.61657864660121, -122.20093137521792),)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LocationsMap(documents: documents, mapController: _mapController, initialPosition: const LatLng(47.61657864660121, -122.20093137521792),)));
                         },
                         label: Text('View Locations on Map!'),
                         icon: Icon(Icons.map), 
