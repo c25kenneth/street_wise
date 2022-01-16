@@ -31,14 +31,15 @@ class _CreateTrackerState extends State<CreateTracker> {
   void initState() {
     twilioFlutter = TwilioFlutter(
       accountSid: 'AC07c124dab9ac7246efaf5c8dc8ae429c',
-      authToken: 'c1c233a6ce7646a3075104aa44399e3f', 
-      twilioNumber: '+19362463603'
+      authToken: '55239837a041cc46b2ce0de02217d895', 
+      twilioNumber: '+19362463603',
     );
     super.initState();
   }
 
-  void sendSms(String phoneNumber, String name) async {
-    await twilioFlutter.sendSMS(toNumber: phoneNumber, messageBody: '$name is looking for you! Make sure you reach out soon!');
+  void sendSms(String phoneNumber, String name, String trackerName) async {
+    await twilioFlutter.sendSMS(toNumber: phoneNumber, messageBody: '$name from $trackerName is looking for you!');
+    print('message printed!');
   }
   @override
   Widget build(BuildContext context) {
@@ -232,8 +233,8 @@ class _CreateTrackerState extends State<CreateTracker> {
                 onPressed: () async {
                   var result = await addTracker(trackerName, name, trackeeName, trackeePhoneNumber, trackeeAddress, latitude, longitude, hours, minutes, seconds);
                   if (result == true) {
-                    Timer(Duration(hours: _hours, minutes: _minutes, seconds: _seconds), (){
-                      sendSms(trackeePhoneNumber, name);
+                    Timer(Duration(hours: _hours, minutes: _minutes, seconds: _seconds), () {
+                      sendSms(trackeePhoneNumber, name, trackerName);
                       InAppNotification.of(context).show(
                         child: Card(
                           child: Column(
