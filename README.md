@@ -1,4 +1,4 @@
-# street_wise
+# Street-wise
 
 A Flutter Application designed to make going from place to place much safer!
 
