@@ -48,6 +48,10 @@ class _HomeState extends State<Home> {
                     final document = snapshot.data.documents[index];
                     return Container(
                       child: Card(
+                        color: Colors.purple[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0)
+                        ),
                         child: Column(
                             children: [
                               Align(
