@@ -38,3 +38,10 @@ Dependencies in Pubspec.yaml:
   - flutter_local_notifications: 1.4.4+1
   - twilio_flutter: 0.0.1
   - in_app_notification: 0.1.0
+
+Flutter Android Specs: 
+  - Min SDK Version 21
+ 
+##Setting up Flutter for Firebase with Exact version numbers as this project:
+- https://www.youtube.com/watch?v=Wa0rdbb53I8&list=PL4cUxeGkcC9j--TKIdkb3ISfRbJeJYQwC&index=2
+ 
